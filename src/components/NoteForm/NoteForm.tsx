@@ -27,6 +27,7 @@ const formSchema = yup.object().shape({
 export default function NoteForm({onClose}: NoteFormProps) {
   const handleSubmit = (values: FormValues, helpers: FormikHelpers<FormValues>) => {
     helpers.resetForm()
+    console.log(values);
 
   }
 
