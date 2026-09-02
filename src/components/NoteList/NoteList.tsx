@@ -1,5 +1,5 @@
 import css from "./NoteList.module.css"
-import type Note from "../../types/note";
+import type {Note} from "../../types/note";
 interface NoteListProps {
   notes: Note[]
 }
@@ -10,7 +10,7 @@ export default function NoteList({notes}: NoteListProps) {
       
       <ul className={css.list}>
         {notes.map((note: Note) => (
-          <li className={css.listItem}>
+          <li className={css.listItem} key={note.id}>
             <h2 className={css.title}>{note.title}</h2>
             <p className={css.content}>{note.content}</p>
             <div className={css.footer}>

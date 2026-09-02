@@ -21,7 +21,7 @@ const initialValues: FormValues = {
 const formSchema = yup.object().shape({
   title: yup.string().min(3, "title must be at least 3 symbols long").max(50, "title must be 50 symbols long max").required("you must fill in this input"),
   content: yup.string().max(500, "content must be 500 symbols long max"),
-  tag: yup.string().required("you must choose one of the options"),
+  tag: yup.string().oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"]).required("you must choose one of the options"),
 })
 
 export default function NoteForm({onClose}: NoteFormProps) {
