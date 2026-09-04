@@ -42,7 +42,7 @@ export default function Modal({ onClose }: ModalProps) {
     onClick={handleBackdropClick}
   >
   <div className={css.modal}>
-    {<NoteForm onClose={onClose} />}
+    <NoteForm onClose={onClose} />
   </div>
   </div>,
     document.body

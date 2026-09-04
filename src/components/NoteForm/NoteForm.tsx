@@ -1,6 +1,8 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import css from "./NoteForm.module.css";
 import { Formik, Form, Field, type FormikHelpers, ErrorMessage } from "formik";
 import * as yup from "yup"
+import { createNote } from "../../services/noteService";
 
 interface NoteFormProps {
   onClose: () => void
@@ -24,11 +26,24 @@ const formSchema = yup.object().shape({
   tag: yup.string().oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"]).required("you must choose one of the options"),
 })
 
-export default function NoteForm({onClose}: NoteFormProps) {
+export default function NoteForm({ onClose }: NoteFormProps) {
+  const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationFn: createNote,
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ['key'] })
+      onClose()
+    },
+    onError(err) {
+  alert(err)
+}
+  })
   const handleSubmit = (values: FormValues, helpers: FormikHelpers<FormValues>) => {
     helpers.resetForm()
     console.log(values);
-
+    
+    mutate({ values })
   }
 
   const handleCancelClick = () => {
