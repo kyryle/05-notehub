@@ -10,11 +10,9 @@ export interface NoteHubResponse {
 }
 
 interface NoteData {
-    values: {
-        title: string;
-        content: string;
-        tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping"
-    }
+    title: string;
+    content: string;
+    tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping"
 }
 
 export const fetchNotes = async (search: string) => {
@@ -45,21 +43,21 @@ export const fetchNotes = async (search: string) => {
 }
 
 export const createNote = async (data: NoteData) => {
-    const result = axios.post<Note>(`https://notehub-public.goit.study/api/notes`, data, {
+    const result = await axios.post<Note>(`https://notehub-public.goit.study/api/notes`, data, {
         headers: {
                 Authorization: `Bearer ${myKey}`
             }
     })
-    return result
+    return result.data
     
 }
 
 export const deleteNote = async (id: NoteId) => {
-    const result = axios.delete<Note>(`https://notehub-public.goit.study/api/notes/${id}`, {
+    const result = await axios.delete<Note>(`https://notehub-public.goit.study/api/notes/${id}`, {
         headers: {
                 Authorization: `Bearer ${myKey}`
             }
     })
-    return result
+    return result.data
     
 }

@@ -1,13 +1,14 @@
 import { createPortal } from "react-dom"
-import NoteForm from "../NoteForm/NoteForm"
+// import NoteForm from "../NoteForm/NoteForm"
 import css from "./Modal.module.css"
 import { useEffect } from "react"
 
 interface ModalProps {
   onClose: () => void
+  children: React.ReactNode
 }
 
-export default function Modal({ onClose }: ModalProps) {
+export default function Modal({ onClose, children }: ModalProps) {
 
     useEffect(() => {
     document.body.style.overflow = 'hidden'
@@ -42,7 +43,7 @@ export default function Modal({ onClose }: ModalProps) {
     onClick={handleBackdropClick}
   >
   <div className={css.modal}>
-    <NoteForm onClose={onClose} />
+    {children}
   </div>
   </div>,
     document.body

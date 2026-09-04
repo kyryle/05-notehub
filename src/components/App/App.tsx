@@ -2,6 +2,7 @@ import css from "./App.module.css"
 import NoteList from "../NoteList/NoteList";
 import Pagination from "../Pagination/Pagination";
 import Modal from "../Modal/Modal"
+import NoteForm from "../NoteForm/NoteForm"
 import SearchBox from "../SearchBox/SearchBox";
 import { fetchNotes } from "../../services/noteService";
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
@@ -13,7 +14,7 @@ export default function App() {
   const [page, setPage] = useState<number>(1)
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const {data} = useQuery({
-    queryKey: ["key", query],
+    queryKey: ["query", query],
     queryFn: () => fetchNotes(query),
     placeholderData: keepPreviousData,
   })
@@ -43,10 +44,12 @@ export default function App() {
     <div className={css.app}>
 	<header className={css.toolbar}>
 		<SearchBox/>
-        {results.length > 1 && <Pagination totalPages={totalPages} getPage={handlePage}/>}
+        {totalPages > 1 && <Pagination totalPages={totalPages} getPage={handlePage} forcePage={page}/>}
     <button className={css.button} onClick={handleClick}>Create note +</button>
         {results.length > 0 && <NoteList notes={results} />}
-        {modalIsOpen && <Modal onClose={handleClose}/>}
+        {modalIsOpen && <Modal onClose={handleClose}>
+          <NoteForm onClose={handleClose}/>
+        </Modal>}
         
   </header>
 </div>

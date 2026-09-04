@@ -32,7 +32,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   const { mutate } = useMutation({
     mutationFn: createNote,
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ['key'] })
+      queryClient.invalidateQueries({ queryKey: ["query"] })
       onClose()
     },
     onError(err) {
@@ -43,7 +43,7 @@ export default function NoteForm({ onClose }: NoteFormProps) {
     helpers.resetForm()
     console.log(values);
     
-    mutate({ values })
+    mutate( values )
   }
 
   const handleCancelClick = () => {
@@ -60,8 +60,8 @@ export default function NoteForm({ onClose }: NoteFormProps) {
   <div className={css.formGroup}>
     <label htmlFor="title">Title</label>
             <Field id="title" type="text" name="title" className={css.input} />
-            <ErrorMessage name="title" component={'p'}/>
-    <span className={css.error} />
+            <ErrorMessage name="title" className={css.error} component={'p'}/>
+    {/* <span className={css.error} /> */}
   </div>
 
   <div className={css.formGroup}>
@@ -73,8 +73,8 @@ export default function NoteForm({ onClose }: NoteFormProps) {
       rows={8}
       className={css.textarea}
             />
-            <ErrorMessage name="content" component={'p'}/>
-    <span className={css.error} />
+            <ErrorMessage name="content" className={css.error} component={'p'}/>
+    {/* <span className={css.error} /> */}
   </div>
 
   <div className={css.formGroup}>
@@ -86,8 +86,8 @@ export default function NoteForm({ onClose }: NoteFormProps) {
       <option value="Meeting">Meeting</option>
       <option value="Shopping">Shopping</option>
             </Field>
-            <ErrorMessage name="tag" component={'p'}/>
-    <span className={css.error} />
+            <ErrorMessage name="tag" className={css.error} component={'p'}/>
+    {/* <span className={css.error} /> */}
   </div>
 
   <div className={css.actions}>

@@ -12,9 +12,10 @@ const ReactPaginate = (
 interface PaginationProps {
   totalPages: number,
   getPage: (page: number) => void
+  forcePage: number
 }
 
-export default function Pagination({ totalPages, getPage }: PaginationProps) {
+export default function Pagination({ totalPages, getPage, forcePage }: PaginationProps) {
   const [currentPage, setCurrentPage] = useState<number>(1)
 
 
@@ -23,6 +24,8 @@ export default function Pagination({ totalPages, getPage }: PaginationProps) {
     setCurrentPage(nextPage)
     getPage(nextPage)
     console.log(currentPage);
+    console.log(forcePage);
+    
   }
   
   
