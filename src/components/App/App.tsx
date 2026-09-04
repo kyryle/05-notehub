@@ -17,7 +17,9 @@ export default function App() {
     queryFn: () => fetchNotes(query),
     placeholderData: keepPreviousData,
   })
-console.log(setQuery);
+  console.log(setQuery);
+  console.log(page);
+  
 
   const handleClick = () => {
     setModalIsOpen(true)
