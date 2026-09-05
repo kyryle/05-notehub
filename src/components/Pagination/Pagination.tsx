@@ -17,7 +17,6 @@ interface PaginationProps {
 
 export default function Pagination({ totalPages, onPageChange, forcePage }: PaginationProps) {
 
-// onPageChange={({ selected }) => setCurrentPage(selected + 1)}
   const handlePageChange = ({ selected }: { selected: number }) => {
     const nextPage = selected + 1
     onPageChange(nextPage)
