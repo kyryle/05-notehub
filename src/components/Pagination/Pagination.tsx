@@ -1,7 +1,7 @@
 import css from "./Pagination.module.css"
 import ReactPaginateModule from "react-paginate";
 import type { ReactPaginateProps } from "react-paginate";
-import { useState, type ComponentType } from "react";
+import { type ComponentType } from "react";
 
 type ModuleWithDefault<T> = { default: T };
 
@@ -11,21 +11,16 @@ const ReactPaginate = (
 
 interface PaginationProps {
   totalPages: number,
-  getPage: (page: number) => void
+  onPageChange: (page: number) => void
   forcePage: number
 }
 
-export default function Pagination({ totalPages, getPage, forcePage }: PaginationProps) {
-  const [currentPage, setCurrentPage] = useState<number>(1)
+export default function Pagination({ totalPages, onPageChange, forcePage }: PaginationProps) {
 
-
+// onPageChange={({ selected }) => setCurrentPage(selected + 1)}
   const handlePageChange = ({ selected }: { selected: number }) => {
     const nextPage = selected + 1
-    setCurrentPage(nextPage)
-    getPage(nextPage)
-    console.log(currentPage);
-    console.log(forcePage);
-    
+    onPageChange(nextPage)
   }
   
   
@@ -41,6 +36,7 @@ export default function Pagination({ totalPages, getPage, forcePage }: Paginatio
         containerClassName={css.pagination}
         activeClassName={css.active}
         renderOnZeroPageCount={null}
+        forcePage={forcePage}
       />
   )
 }

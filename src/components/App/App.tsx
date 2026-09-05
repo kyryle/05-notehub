@@ -7,19 +7,18 @@ import SearchBox from "../SearchBox/SearchBox";
 import { fetchNotes } from "../../services/noteService";
 import { keepPreviousData, useQuery } from "@tanstack/react-query"
 import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import type { Note } from "../../types/note"
 
 export default function App() {
-  const [query, setQuery] = useState<string>('')
+  const [searchValue, setSearchValue] = useState<string>('')
   const [page, setPage] = useState<number>(1)
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const {data} = useQuery({
-    queryKey: ["query", query],
-    queryFn: () => fetchNotes(query),
+    queryKey: ["noteQuery", searchValue, page],
+    queryFn: () => fetchNotes(searchValue, page),
     placeholderData: keepPreviousData,
   })
-  console.log(setQuery);
-  console.log(page);
   
 
   const handleClick = () => {
@@ -30,6 +29,14 @@ export default function App() {
     setModalIsOpen(false)
   }
 
+
+  const onSearch = (value: string) => {
+    setSearchValue(value)
+    setPage(1)
+  }
+
+  const debouncedOnSearch = useDebouncedCallback(onSearch, 1000)
+  
   const handlePage = (page: number) => {
     setPage(page)
   }
@@ -43,8 +50,8 @@ export default function App() {
   return (
     <div className={css.app}>
 	<header className={css.toolbar}>
-		<SearchBox/>
-        {totalPages > 1 && <Pagination totalPages={totalPages} getPage={handlePage} forcePage={page}/>}
+        <SearchBox searchValue={searchValue} onSearch={debouncedOnSearch}/>
+        {totalPages > 1 && <Pagination totalPages={totalPages} onPageChange={handlePage} forcePage={page}/>}
     <button className={css.button} onClick={handleClick}>Create note +</button>
         {results.length > 0 && <NoteList notes={results} />}
         {modalIsOpen && <Modal onClose={handleClose}>

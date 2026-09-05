@@ -15,12 +15,12 @@ interface NoteData {
     tag: "Todo" | "Work" | "Personal" | "Meeting" | "Shopping"
 }
 
-export const fetchNotes = async (search: string) => {
+export const fetchNotes = async (search: string, page: number) => {
     try {
         const result = await axios.get<NoteHubResponse>('https://notehub-public.goit.study/api/notes', {
             params: {
                 search: search,
-                page: 1,
+                page: page,
             },
             headers: {
                 Authorization: `Bearer ${myKey}`
